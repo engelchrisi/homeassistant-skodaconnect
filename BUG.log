@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/update_coordinator.py", line 235, in _handle_refresh_interval
+    await self._async_refresh(log_failures=True, scheduled=True)
+  File "/usr/src/homeassistant/homeassistant/helpers/update_coordinator.py", line 392, in _async_refresh
+    self.async_update_listeners()
+  File "/usr/src/homeassistant/homeassistant/helpers/update_coordinator.py", line 173, in async_update_listeners
+    update_callback()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 730, in async_write_ha_state
+    self._async_write_ha_state()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 830, in _async_write_ha_state
+    state, attr = self._async_generate_attributes()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 771, in _async_generate_attributes
+    state = self._stringify_state(available)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 736, in _stringify_state
+    if (state := self.state) is None:
+                 ^^^^^^^^^^
+  File "/config/custom_components/skodaconnect/sensor.py", line 50, in state
+    return self.instrument.state
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/skodaconnect/dashboard.py", line 127, in state
+    val = super().state
+          ^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/skodaconnect/dashboard.py", line 58, in state
+    if hasattr(self.vehicle, self.attr):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/skodaconnect/vehicle.py", line 2206, in outside_temperature
+    response = int(self.attrs.get('StoredVehicleDataResponseParsed')['0x0301020001'].get('value', 0))
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+KeyError: '0x0301020001'

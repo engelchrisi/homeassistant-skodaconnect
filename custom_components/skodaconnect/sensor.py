@@ -47,7 +47,19 @@ class SkodaSensor(SkodaEntity, SensorEntity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self.instrument.state
+        res = None
+        try:
+          # @CE@
+          # TODO: pimp \\192.168.178.231\config\custom_components\skodaconnect\sensor.py with this try/except
+          # Avoid this error in the logs occurring every night
+          #   File "/usr/local/lib/python3.11/site-packages/skodaconnect/vehicle.py", line 2206, in outside_temperature
+          #     response = int(self.attrs.get('StoredVehicleDataResponseParsed')['0x0301020001'].get('value', 0))
+          #                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+          # KeyError: '0x0301020001'          
+          res = self.instrument.state
+        except Exception as e:
+          _LOGGER.warning(e)
+        return res
 
     @property
     def native_unit_of_measurement(self):
